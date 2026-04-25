@@ -43,25 +43,26 @@
     keymap {
         compatible = "zmk,keymap";
 
-        QWERTY {
-            bindings = <
-&kp ESC      &kp N1   &kp N2   &kp N3   &kp N4   &kp N5      &kp N6   &kp N7    &kp N8     &kp N9    &kp N0   &kp DEL
-&kp TAB      &kp Q    &kp W    &kp E    &kp R    &kp T       &kp Y    &kp U     &kp I      &kp O     &kp P    &kp LC(LS(S))
-&kp C_MUTE   &kp A    &kp S    &kp D    &kp F    &kp G       &kp H    &kp J     &kp K      &kp L     &kp SEMI &kp LG(I)
-&kp LSHFT    &kp Z    &kp X    &kp C    &kp V    &kp B       &kp N    &kp M     &kp COMMA  &kp DOT   &kp UP   &kp LG(K)
-&kp LCTRL    &kp LGUI &kp LALT &mt LSHFT ESC   &lt 1 BSPC   &mt LALT DEL   &mt LGUI TAB   &lt 2 SPACE   &mt LCTRL ENTER   &kp LEFT  &kp DOWN  &kp RIGHT
-            >;
+        /* Layer order / numbers used below:
+         * 0 BASE
+         * 1 NAV   (hold left middle thumb / Space)
+         * 2 MOUSE (hold left inner thumb / Tab)
+         * 3 MEDIA (hold left outer thumb / Esc)
+         * 4 NUM   (hold right inner thumb / Backspace)
+         * 5 SYM   (hold right middle thumb / Enter)
+         * 6 FUN   (hold right outer thumb / Delete)
+         */
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
-        };
-
-        SYM_NUM {
+        BASE {
             bindings = <
-&kp F12  &kp F1      &kp F2     &kp F3     &kp F4    &kp F5      &kp F6   &kp F7   &kp F8   &kp F9   &kp F10  &kp F11
-&trans   &kp EXCL    &kp AT     &kp HASH   &kp DLLR  &kp PRCNT   &trans   &kp N7   &kp N8   &kp N9   &trans   &trans
-&trans   &kp CARET   &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR    &trans   &kp N4   &kp N5   &kp N6   &trans   &trans
-&trans   &kp MINUS   &kp EQUAL  &kp LBKT   &kp RBKT  &kp GRAVE   &trans   &kp N1   &kp N2   &kp N3   &trans   &trans
-&trans   &trans      &trans     &trans     &trans    &trans      &mkp LCLK  &mkp RCLK  &trans   &trans   &trans   &trans
+/* Row 0 */  &kp ESC      &kp N1   &kp N2   &kp N3   &kp N4   &kp N5        &kp N6   &kp N7   &kp N8   &kp N9   &kp N0   &kp DEL
+/* Row 1 */  &kp TAB      &kp Q    &kp W    &kp E    &kp R    &kp T         &kp Y    &kp U    &kp I    &kp O    &kp P    &kp BSLH
+/* Row 2 */  &kp CAPSLOCK &kp A    &kp S    &kp D    &kp F    &kp G         &kp H    &kp J    &kp K    &kp L    &kp SEMI &kp SQT
+/* Row 3 */  &kp LSHFT    &kp Z    &kp X    &kp C    &kp V    &kp B         &kp N    &kp M    &kp COMMA &kp DOT  &kp UP_ARROW &kp FSLH
+/* Row 4 */  &kp LCTRL    &kp LGUI &kp LALT
+             &lt 3 ESC      &lt 1 SPACE    &lt 2 TAB
+             &lt 4 BACKSPACE  &lt 5 ENTER    &lt 6 DELETE
+             &kp LEFT_ARROW &kp DOWN_ARROW &kp RIGHT_ARROW
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -69,38 +70,92 @@
 
         NAV {
             bindings = <
-&trans   &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &trans   &trans     &trans     &trans      &trans     &bt BT_CLR
-&trans   &trans        &trans        &trans        &trans        &trans         &trans   &kp HOME   &kp UP     &kp END     &kp PG_UP  &bt BT_CLR_ALL
-&trans   &trans        &trans        &trans        &trans        &trans         &trans   &kp LEFT   &kp DOWN   &kp RIGHT   &kp PG_DN  &bt BT_NXT
-&trans   &kp LC(Z)     &kp LC(X)     &kp LC(C)     &kp LC(V)     &trans         &trans   &trans     &trans     &trans      &trans     &trans
-&trans   &trans        &trans        &trans        &trans        &trans         &trans   &trans     &trans     &trans      &trans     &trans
+/* Row 0 */  &trans &trans &trans &trans &trans &trans    &trans      &trans      &trans      &trans      &trans      &trans
+/* Row 1 */  &trans &trans &trans &trans &trans &trans    &kp LC(Z)   &kp LC(X)   &kp LC(C)   &kp LC(V)   &kp LC(A)   &kp INS
+/* Row 2 */  &trans &trans &trans &trans &trans &trans    &kp HOME    &kp LEFT_ARROW &kp DOWN_ARROW &kp UP_ARROW &kp RIGHT_ARROW &kp END
+/* Row 3 */  &trans &trans &trans &trans &trans &trans    &kp DEL     &kp HOME    &kp PG_DN   &kp PG_UP   &kp END     &kp BACKSPACE
+/* Row 4 */  &trans &trans &trans
+             &kp ESC     &kp SPACE   &kp TAB
+             &kp BACKSPACE &kp ENTER &kp DELETE
+             &kp LEFT_ARROW &kp DOWN_ARROW &kp RIGHT_ARROW
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        scroll-layers {
+        MOUSE {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+/* Row 0 */  &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
+/* Row 1 */  &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
+/* Row 2 */  &trans &trans &trans &trans &trans &trans    &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &trans &trans
+/* Row 3 */  &trans &trans &trans &trans &trans &trans    &msc SCRL_LEFT &msc SCRL_DOWN &msc SCRL_UP &msc SCRL_RIGHT &trans &trans
+/* Row 4 */  &trans &trans &trans
+             &kp ESC     &kp SPACE   &kp TAB
+             &mkp LCLK   &mkp RCLK   &mkp MCLK
+             &trans &trans &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        snipe-layers {
+        MEDIA {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+/* Row 0 */  &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
+/* Row 1 */  &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
+/* Row 2 */  &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &kp C_MUTE &trans
+/* Row 3 */  &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &kp C_VOL_UP &kp C_VOL_DN
+/* Row 4 */  &trans &trans &trans
+             &kp ESC     &kp SPACE   &kp TAB
+             &kp BACKSPACE &kp ENTER &kp DELETE
+             &trans &trans &trans
             >;
 
-            sensor-bindings = <&scroll_vertical_encoder>, <&scroll_horizontal_encoder>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        NUM {
+            bindings = <
+/* Row 0 */  &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
+/* Row 1 */  &trans &kp N7 &kp N8 &kp N9 &kp MINUS &kp EQUAL   &trans &trans &trans &trans &trans &trans
+/* Row 2 */  &trans &kp N4 &kp N5 &kp N6 &kp LPAR  &kp RPAR    &trans &trans &trans &trans &trans &trans
+/* Row 3 */  &trans &kp N1 &kp N2 &kp N3 &kp LBKT  &kp RBKT    &trans &trans &trans &trans &trans &trans
+/* Row 4 */  &trans &trans &trans
+             &kp ESC     &kp SPACE   &kp TAB
+             &kp BACKSPACE &kp ENTER &kp DELETE
+             &trans &trans &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        SYM {
+            bindings = <
+/* Row 0 */  &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
+/* Row 1 */  &trans &kp EXCL &kp AT   &kp HASH &kp DLLR &kp PRCNT  &trans &trans &trans &trans &trans &trans
+/* Row 2 */  &trans &kp CARET &kp AMPS &kp ASTRK &kp LPAR &kp RPAR &trans &trans &trans &trans &trans &trans
+/* Row 3 */  &trans &kp MINUS &kp EQUAL &kp LBKT &kp RBKT &kp GRAVE &trans &trans &trans &trans &trans &trans
+/* Row 4 */  &trans &trans &trans
+             &kp ESC     &kp SPACE   &kp TAB
+             &kp BACKSPACE &kp ENTER &kp DELETE
+             &trans &trans &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        FUN {
+            bindings = <
+/* Row 0 */  &kp F12 &kp F1 &kp F2 &kp F3 &kp F4 &kp F5    &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11
+/* Row 1 */  &trans  &trans &trans &trans &trans &trans     &trans &trans &trans &trans &trans  &trans
+/* Row 2 */  &trans  &trans &trans &trans &trans &trans     &trans &trans &trans &trans &trans  &trans
+/* Row 3 */  &trans  &trans &trans &trans &trans &trans     &trans &trans &trans &trans &trans  &trans
+/* Row 4 */  &trans &trans &trans
+             &kp ESC     &kp SPACE   &kp TAB
+             &kp BACKSPACE &kp ENTER &kp DELETE
+             &trans &trans &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };
