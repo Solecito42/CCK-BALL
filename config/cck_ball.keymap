@@ -13,9 +13,9 @@
 &msc_input_listener { input-processors = <&zip_scroll_scaler 2 1>; };
 
 &msc {
-    acceleration-exponent = <0>;
-    time-to-max-speed-ms = <300>;
-    delay-ms = <0>;
+    acceleration-exponent = <0>;      // 0
+    time-to-max-speed-ms = <300>;       // 300
+    delay-ms = <0>;                   // 0
 };
 
 &mmv {
@@ -26,12 +26,8 @@
 
 &soft_off { hold-time-ms = <2000>; };
 
-&mt {
-    flavor = "tap-preferred";
-    tapping-term-ms = <200>;
-};
-
 / {
+    // 上下滚动编码器行为
     scroll_vertical_encoder: scroll_vertical_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
@@ -39,118 +35,68 @@
         tap-ms = <100>;
     };
 
+    // 左右滚动编码器行为
     scroll_horizontal_encoder: scroll_horizontal_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
         bindings = <&msc SCRL_LEFT>, <&msc SCRL_RIGHT>;
         tap-ms = <100>;
     };
-
-    behaviors {};
+    
+    behaviors {
+    };
 
     keymap {
         compatible = "zmk,keymap";
 
-        // ─────────────────────────────────────────────────────────────
-        // Layer 0 — BASE (Colemak-DH core, Miryoku home-row mods)
-        //
-        // Physical layout (60 keys, 5 rows × 12 cols):
-        //
-        // Row 0 (extra number row — left as-is):
-        //   ESC  1    2    3    4    5    6    7    8    9    0    BSPC
-        //
-        // Row 1 (alpha top row):
-        //   TAB  Q    W    F    P    B    J    L    U    Y    '    BSLH
-        //
-        // Row 2 (home row — Miryoku mods: GUI/ALT/CTRL/SHIFT):
-        //   CAPS A    R    S    T    G    M    N    E    I    O    '
-        //
-        // Row 3 (bottom alpha row):
-        //   LSFT Z    X    C    D    V    K    H    ,    .    /    FSLH
-        //
-        // Row 4 (thumb + outer bottom keys):
-        //   LCTL LWIN LALT [ESC] [SPC] [lt1 TAB]   [lt2 BSPC] [lt3 ENT] [DEL] ← ↓ →
-        //
-        // Thumb logic:
-        //   Left  thumbs: ESC (tap) | Space (tap) | TAB→hold=NUMSYM (layer 1)
-        //   Right thumbs: BSPC→hold=BT (layer 2) | ENTER→hold=MOUSE (layer 3) | DEL
-        // ─────────────────────────────────────────────────────────────
-        BASE {
+        QWERTY {
+    bindings = <
+&kp ESC           &kp N1           &kp N2           &kp N3      &kp N4     &kp N5  &kp N6  &kp N7          &kp N8          &kp N9          &kp N0          &kp BACKSPACE
+&kp TAB           &kp Q            &kp W            &kp E       &kp R      &kp T   &kp Y   &kp U           &kp I           &kp O           &kp P           &kp BSLH
+&kp CAPSLOCK      &mt LGUI A       &mt LALT S       &mt LCTRL D &mt LSHFT F &kp G  &kp H   &mt RSHFT J     &mt RCTRL K     &mt RALT L      &mt RGUI SEMI   &kp SQT
+&kp LEFT_SHIFT    &kp Z            &kp X            &kp C       &kp V      &kp B   &kp N   &kp M           &kp COMMA       &kp DOT         &kp UP_ARROW    &kp FSLH
+&kp LEFT_CONTROL  &kp LEFT_WIN     &kp LEFT_ALT     &kp DELETE  &kp SPACE  &mo 1   &mo 2   &kp SPACE       &kp ENTER       &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW
+    >;
+
+    sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+};
+
+        F_layers {
             bindings = <
-&kp ESC          &kp N1        &kp N2        &kp N3        &kp N4        &kp N5        &kp N6        &kp N7        &kp N8        &kp N9        &kp N0        &kp BACKSPACE
-&kp TAB          &kp Q         &kp W         &kp F         &kp P         &kp B         &kp J         &kp L         &kp U         &kp Y         &kp SQT       &kp BSLH
-&kp CAPSLOCK     &mt LGUI A    &mt LALT R    &mt LCTRL S   &mt LSHFT T   &kp G         &kp M         &mt RSHFT N   &mt RCTRL E   &mt RALT I    &mt RGUI O    &kp SQT
-&kp LEFT_SHIFT   &kp Z         &kp X         &kp C         &kp D         &kp V         &kp K         &kp H         &kp COMMA     &kp DOT       &kp SLASH     &kp FSLH
-&kp LEFT_CONTROL &kp LEFT_WIN  &kp LEFT_ALT  &kp ESC       &kp SPACE     &lt 1 TAB     &lt 2 BSPC    &lt 3 ENTER   &kp DEL       &kp LEFT      &kp DOWN      &kp RIGHT
+&kp F12  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6     &kp F7     &kp F8  &kp F9  &kp F10  &kp F11
+&kp A    &none   &none   &none   &none   &trans  &none      &none      &none   &trans  &trans   &trans
+&trans   &none   &none   &none   &none   &trans  &mkp LCLK  &mkp RCLK  &trans  &trans  &trans   &trans
+&trans   &trans  &trans  &trans  &trans  &none   &none      &none      &trans  &trans  &none    &trans
+&trans   &trans  &trans  &trans  &trans  &trans  &mkp LCLK  &mkp RCLK  &trans  &trans  &trans   &trans
             >;
+
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        // ─────────────────────────────────────────────────────────────
-        // Layer 1 — NUMSYM (hold TAB from base)
-        //
-        // Left side = symbols, Right side = numbers
-        //
-        // Row 0: transparent (number row still works)
-        // Row 1: !  @  #  $  %      7  8  9  -  +
-        // Row 2: ^  &  *  (  )      4  5  6  [  ]
-        // Row 3: {  }  [  ]  |      1  2  3  /  *
-        // Row 4: outer keys trans   0  .  trans trans trans trans
-        // ─────────────────────────────────────────────────────────────
-        NUMSYM {
-            bindings = <
-&trans  &trans          &trans          &trans          &trans               &trans                &trans   &trans   &trans   &trans          &trans          &trans
-&trans  &kp EXCL        &kp AT          &kp HASH        &kp DOLLAR           &kp PERCENT           &kp N7   &kp N8   &kp N9   &kp MINUS       &kp PLUS        &trans
-&trans  &kp CARET       &kp AMPS        &kp STAR        &kp LEFT_PARENTHESIS &kp RIGHT_PARENTHESIS &kp N4   &kp N5   &kp N6   &kp LBKT        &kp RBKT        &trans
-&trans  &kp LEFT_BRACE  &kp RIGHT_BRACE &kp LBKT        &kp RBKT             &kp PIPE              &kp N1   &kp N2   &kp N3   &kp SLASH       &kp STAR        &trans
-&trans  &trans          &trans          &trans          &trans               &trans                &kp N0   &kp DOT  &trans   &trans          &trans          &trans
-            >;
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
-        };
-
-        // ─────────────────────────────────────────────────────────────
-        // Layer 2 — BT / SYSTEM (hold BSPC from base)
-        //
-        // Bluetooth device select on row 0, clear on row 2
-        // Output toggle on thumb row
-        // ─────────────────────────────────────────────────────────────
         BT_layers {
             bindings = <
-&trans  &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4    &trans          &trans  &trans  &trans  &trans  &trans
-&trans  &trans          &trans          &trans          &trans          &trans          &trans          &trans  &trans  &trans  &trans  &trans
-&trans  &bt BT_CLR_ALL  &trans          &trans          &trans          &trans          &trans          &trans  &trans  &trans  &trans  &trans
-&trans  &trans          &trans          &bt BT_CLR      &trans          &trans          &bt BT_NXT      &trans  &trans  &trans  &trans  &trans
-&trans  &trans          &trans          &out OUT_TOG    &out OUT_BLE    &out OUT_USB    &trans          &trans  &trans  &trans  &trans  &trans
+&trans  &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &trans      &trans  &trans  &trans  &trans  &kp W
+&trans  &trans          &trans        &trans        &trans        &trans        &trans      &trans  &trans  &trans  &trans  &trans
+&trans  &bt BT_CLR_ALL  &trans        &trans        &trans        &trans        &trans      &trans  &trans  &trans  &trans  &trans
+&trans  &trans          &trans        &bt BT_CLR    &trans        &trans        &bt BT_NXT  &trans  &trans  &trans  &trans  &trans
+&trans  &trans          &trans        &trans        &trans        &trans        &trans      &trans  &trans  &trans  &trans  &trans
             >;
+
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        // ─────────────────────────────────────────────────────────────
-        // Layer 3 — MOUSE CLICKS (hold ENTER from base)
-        //
-        // Everything transparent except thumb row:
-        //   Left thumbs:  LCLK | RCLK | MCLK
-        //   Right thumbs: transparent (you're already holding ENTER)
-        //
-        // This keeps mouse clicks completely off the base home keys.
-        // Your trackball moves the cursor naturally — just hold ENTER
-        // and tap a left thumb key to click.
-        // ─────────────────────────────────────────────────────────────
-        MOUSE {
+        scroll-layers {
             bindings = <
-&trans  &trans  &trans  &trans      &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans      &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans      &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans      &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
-            sensor-bindings = <&scroll_vertical_encoder>, <&scroll_horizontal_encoder>;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        // ─────────────────────────────────────────────────────────────
-        // Layer 4 — SNIPE (placeholder, kept from original)
-        // All transparent — encoder switches to scroll mode
-        // ─────────────────────────────────────────────────────────────
         snipe-layers {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
@@ -159,8 +105,9 @@
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
-            sensor-bindings = <&scroll_vertical_encoder>, <&scroll_horizontal_encoder>;
-        };
 
+            sensor-bindings = <&scroll_vertical_encoder>,   // 编码器1：上下滚动
+                             <&scroll_horizontal_encoder>;  // 编码器2：左右滚动
+        };
     };
 };
