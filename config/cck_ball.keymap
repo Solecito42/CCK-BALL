@@ -7,6 +7,8 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/rgb.h>
 
 &mmv_input_listener { input-processors = <&zip_xy_scaler 2 1>; };
 &msc_input_listener { input-processors = <&zip_scroll_scaler 2 1>; };
@@ -56,76 +58,83 @@
         compatible = "zmk,keymap";
 
         // ── 0: BASE ──────────────────────────────────────────────────
-        // QWERTY alphas, Miryoku home-row mods, Miryoku thumbs
-        // Number row and outer columns left untouched
-        // Hold Z or / for Button layer
         BASE {
             bindings = <
-&kp ESC           &kp N1           &kp N2           &kp N3           &kp N4           &kp N5     &kp N6     &kp N7           &kp N8           &kp N9           &kp N0           &kp BACKSPACE
-&kp TAB           &kp Q            &kp W            &kp E            &kp R            &kp T      &kp Y      &kp U            &kp I            &kp O            &kp P            &kp BSLH
-&kp CAPSLOCK      &mt LGUI A       &mt LALT S       &mt LCTRL D      &mt LSHFT F      &kp G      &kp H      &mt RSHFT J      &mt RCTRL K      &mt RALT L       &mt RGUI SEMI    &kp SQT
-&kp LEFT_SHIFT    &lt 7 Z          &kp X            &kp C            &kp V            &kp B      &kp N      &kp M            &kp COMMA        &kp DOT          &kp UP_ARROW     &lt 7 FSLH
-&kp LEFT_CONTROL  &kp LEFT_WIN     &kp LEFT_ALT     &lt 3 ESC        &lt 1 SPACE      &lt 2 TAB  &lt 4 BSPC &lt 5 ENTER      &lt 6 DEL        &kp LEFT_ARROW   &kp DOWN_ARROW   &kp RIGHT_ARROW
+&kp ESC           &kp N1        &kp N2        &kp N3        &kp N4        &kp N5      &kp N6       &kp N7        &kp N8         &kp N9         &kp N0         &kp BACKSPACE
+&kp TAB           &kp Q         &kp W         &kp E         &kp R         &kp T       &kp Y        &kp U         &kp I          &kp O          &kp P          &kp BSLH
+&kp CAPSLOCK      &mt LGUI A    &mt LALT S    &mt LCTRL D   &mt LSHFT F   &kp G       &kp H        &mt RSHFT J   &mt RCTRL K    &mt RALT L     &mt RGUI SEMI  &kp SQT
+&kp LEFT_SHIFT    &lt 7 Z       &kp X         &kp C         &kp V         &kp B       &kp N        &kp M         &kp COMMA      &kp DOT        &kp UP_ARROW   &lt 7 FSLH
+&kp LEFT_CONTROL  &kp LEFT_WIN  &kp LEFT_ALT  &lt 3 ESC     &lt 1 SPACE   &lt 2 TAB   &lt 4 BSPC   &lt 5 ENTER   &lt 6 DEL      &kp LEFT_ARROW &kp DOWN_ARROW &kp RIGHT_ARROW
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        // ── 1: NAV (placeholder) ─────────────────────────────────────
+        // ── 1: NAV ───────────────────────────────────────────────────
+        // Right hand: clipboard top, arrows home, page/line bottom
+        // Left hand: home-row mods mirrored
+        // Right thumbs: mouse clicks
         NAV {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &trans        &trans        &trans        &trans        &trans     &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &kp K_REDO    &kp K_PASTE   &kp K_COPY    &kp K_CUT     &kp K_UNDO &trans
+&trans  &kp LGUI      &kp LALT    &kp LCTRL     &kp LSHFT     &trans    &kp CAPS      &kp LEFT      &kp DOWN      &kp UP        &kp RIGHT  &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &kp INS       &kp HOME      &kp PG_DN     &kp PG_UP     &kp END    &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &mkp LCLK     &mkp RCLK     &mkp MCLK     &trans        &trans     &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        // ── 2: MOUSE (placeholder) ───────────────────────────────────
+        // ── 2: MOUSE (minimal — scroll + clicks only) ────────────────
         MOUSE {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans     &trans     &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans     &trans     &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans     &trans     &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans     &trans     &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &mkp LCLK  &mkp RCLK  &mkp MCLK  &trans  &trans  &trans
             >;
             sensor-bindings = <&scroll_vertical_encoder>, <&scroll_horizontal_encoder>;
         };
 
-        // ── 3: MEDIA (placeholder) ───────────────────────────────────
+        // ── 3: MEDIA ─────────────────────────────────────────────────
+        // Right hand: RGB top, media home, BT bottom
+        // Left hand: home-row mods mirrored
+        // Thumbs: Stop | Pause | Mute
         MEDIA {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &rgb_ug RGB_TOG  &rgb_ug RGB_EFF  &rgb_ug RGB_HUI  &rgb_ug RGB_SAI  &rgb_ug RGB_BRI  &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &trans           &trans           &trans           &trans           &trans           &trans
+&trans  &kp LGUI      &kp LALT    &kp LCTRL     &kp LSHFT     &trans    &out OUT_TOG     &kp C_PREV       &kp C_VOL_DN     &kp C_VOL_UP     &kp C_NEXT       &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &bt BT_CLR       &bt BT_SEL 0     &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3     &trans
+&trans  &trans        &trans      &trans        &kp C_STOP    &kp C_PP  &kp C_MUTE       &trans           &trans           &trans           &trans           &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        // ── 4: SYM (placeholder) ─────────────────────────────────────
+        // ── 4: SYM ───────────────────────────────────────────────────
+        // Shifted symbols mirroring NUM positions
+        // Thumbs: ( | ) | _
         SYM {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp LBRC      &kp AMPS    &kp STAR      &kp LPAR      &kp RBRC  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp COLON     &kp DOLLAR  &kp PERCENT   &kp CARET     &kp PLUS  &trans  &kp RSHFT &kp RCTRL &kp RALT &kp RGUI &trans
+&trans  &kp TILDE     &kp EXCL    &kp AT        &kp HASH      &kp PIPE  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans      &trans        &kp LPAR      &kp RPAR  &trans  &kp UNDER &trans &trans  &trans  &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        // ── 5: NUM (placeholder) ─────────────────────────────────────
+        // ── 5: NUM ───────────────────────────────────────────────────
+        // Standard numpad layout on left hand
+        // Thumbs: . | 0 | =
         NUM {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans        &trans      &trans        &trans        &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp LBKT      &kp N7      &kp N8        &kp N9        &kp RBKT  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp SEMI      &kp N4      &kp N5        &kp N6        &kp EQUAL &trans  &kp RSHFT &kp RCTRL &kp RALT &kp RGUI &trans
+&trans  &kp GRAVE     &kp N1      &kp N2        &kp N3        &kp BSLH  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans      &trans        &kp DOT       &kp N0    &trans  &trans  &kp EQUAL &trans &trans  &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
