@@ -52,6 +52,14 @@
         tap-ms = <100>;
     };
 
+    macros {
+        snipping_tool: snipping_tool {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LS(S))>;
+        };
+    };
+
     behaviors {};
 
     keymap {
@@ -59,10 +67,10 @@
 
         BASE {
             bindings = <
-&trans            &kp N1        &kp N2        &kp N3        &kp N4        &kp N5      &kp N6       &kp N7        &kp N8         &kp N9          &kp N0          &trans
-&trans            &kp Q         &kp W         &kp E         &kp R         &kp T       &kp Y        &kp U         &kp I          &kp O           &kp P           &trans
-&trans            &mt LGUI A    &mt LALT S    &mt LCTRL D   &mt LSHFT F   &kp G       &kp H        &mt RSHFT J   &mt RCTRL K    &mt RALT L      &mt RGUI SEMI   &trans
-&trans            &lt 6 Z       &kp X         &kp C         &kp V         &kp B       &kp N        &kp M         &kp COMMA      &kp DOT         &kp UP          &lt 6 FSLH
+&soft_off         &kp N1        &kp N2        &kp N3        &kp N4        &kp N5      &kp N6       &kp N7        &kp N8         &kp N9          &kp N0          &snipping_tool
+&caps_word        &kp Q         &kp W         &kp E         &kp R         &kp T       &kp Y        &kp U         &kp I          &kp O           &kp P           &kp K_APP
+&kp C_AL_CALC     &mt LGUI A    &mt LALT S    &mt LCTRL D   &mt LSHFT F   &kp G       &kp H        &mt RSHFT J   &mt RCTRL K    &mt RALT L      &mt RGUI SEMI   &kp C_AC_BACK
+&tog 6            &lt 6 Z       &kp X         &kp C         &kp V         &kp B       &kp N        &kp M         &kp COMMA      &kp DOT         &kp UP          &lt 6 FSLH
 &kp LCTRL         &kp LGUI      &kp LALT      &lt 4 ESC     &lt 1 SPACE   &lt 5 TAB   &lt 3 ENTER  &lt 2 BSPC    &lt 4 DEL      &kp LEFT        &kp DOWN        &kp RIGHT
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
@@ -103,11 +111,11 @@
 
         MED {
             bindings = <
-&trans  &trans        &trans           &trans          &trans           &trans      &trans      &trans           &trans          &trans           &trans        &trans
-&trans  &trans        &rgb_ug RGB_EFR  &rgb_ug RGB_TOG &rgb_ug RGB_EFF  &trans      &trans      &rgb_ug RGB_EFR  &rgb_ug RGB_TOG &rgb_ug RGB_EFF  &trans        &trans
-&trans  &kp C_PREV    &kp C_VOL_DN     &kp C_MUTE      &kp C_VOL_UP     &kp C_NEXT  &kp C_PREV  &kp C_VOL_DN     &kp C_MUTE      &kp C_VOL_UP     &kp C_NEXT    &trans
-&trans  &trans        &trans           &trans           &sys_reset       &bootloader &bootloader &sys_reset       &trans          &trans           &trans        &trans
-&trans  &trans        &trans           &trans           &kp C_PP         &kp C_STOP  &kp C_STOP  &kp C_PP         &trans          &trans           &trans        &trans
+&bt BT_CLR_ALL  &trans        &trans           &trans          &trans           &trans      &trans      &bt BT_SEL 0     &bt BT_SEL 1    &bt BT_SEL 2     &bt BT_SEL 3  &out OUT_TOG
+&bt BT_CLR      &trans        &rgb_ug RGB_EFR  &rgb_ug RGB_TOG &rgb_ug RGB_EFF  &trans      &trans      &bt BT_DISC 0    &bt BT_DISC 1   &bt BT_DISC 2    &bt BT_DISC 3 &trans
+&trans          &kp C_PREV    &kp C_VOL_DN     &kp C_MUTE      &kp C_VOL_UP     &kp C_NEXT  &kp C_PREV  &kp C_VOL_DN     &kp C_MUTE      &kp C_VOL_UP     &kp C_NEXT    &trans
+&trans          &trans        &trans           &trans          &sys_reset       &bootloader &bootloader &sys_reset       &trans          &trans           &trans        &trans
+&trans          &trans        &trans           &trans          &kp C_PP         &kp C_STOP  &kp C_STOP  &kp C_PP         &trans          &trans           &trans        &trans
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
