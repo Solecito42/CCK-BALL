@@ -86,7 +86,7 @@
 &trans  &trans    &trans    &trans     &trans     &trans  &trans    &trans      &trans      &trans    &trans     &trans
 &trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans  &kp CAPS  &kp LEFT    &kp DOWN    &kp UP    &kp RIGHT  &trans
 &trans  &trans    &trans    &trans     &trans     &trans  &kp INS   &kp HOME    &kp PG_DN   &kp PG_UP &kp END    &trans
-&trans  &trans    &trans    &trans     &trans     &trans  &kp ENTER &kp K_PASTE &kp BSPC    &trans    &trans     &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &kp ENTER &kp LC(V)   &kp BSPC    &trans    &trans     &trans
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
@@ -146,9 +146,9 @@
         // Thumb: dead / dead / [hold=FUN]  |  dead / dead
         FUN {
             bindings = <
-&trans  &trans    &trans    &trans     &trans     &trans  &kp PSCRN       &kp F7  &kp F8  &kp F9  &kp F12  &trans
-&trans  &trans    &trans    &trans     &trans     &trans  &kp SLCK        &kp F4  &kp F5  &kp F6  &kp F11  &trans
-&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans  &kp PAUSE_BREAK &kp F1  &kp F2  &kp F3  &kp F10  &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &kp PRINTSCREEN  &kp F7  &kp F8  &kp F9  &kp F12  &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &kp SCROLLLOCK   &kp F4  &kp F5  &kp F6  &kp F11  &trans
+&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans  &kp PAUSE_BREAK  &kp F1  &kp F2  &kp F3  &kp F10  &trans
 &trans  &trans    &trans    &trans     &trans     &trans  &trans          &trans  &trans  &trans  &trans   &trans
 &trans  &trans    &trans    &trans     &trans     &trans  &trans          &trans  &trans  &trans  &trans   &trans
             >;
