@@ -38,7 +38,7 @@
 };
 
 / {
-    // Left encoder: volume up/down
+    // Left encoder:  Volume up/down  (always)
     vol_encoder: vol_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
@@ -46,7 +46,7 @@
         tap-ms = <100>;
     };
 
-    // Right encoder: mouse scroll up/down
+    // Right encoder: Mouse scroll up/down  (always)
     scroll_encoder: scroll_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
@@ -60,91 +60,113 @@
         compatible = "zmk,keymap";
 
         // ── 0: BASE ──────────────────────────────────────────────────
-        // QWERTY alphas
+        // Outer col = trans  |  Number row = trans
         // Home row hold: A=Super S=Alt D=Ctrl F=Shift | J=Shift K=Ctrl L=Alt ;=Super
-        // Thumb hold:    ESC=MED  SPC=NAV  TAB=FUN  |  ENT=SYM  BSPC=NUM  DEL=MED
-        // Pinky hold:    Z=POINTER   /=POINTER
-        // Left encoder:  volume | Right encoder: scroll
-        // Outer columns and number row left untouched
+        // Thumb: ESC/MED  SPC/NAV  TAB/FUN  |  ENT/SYM  BSPC/NUM  DEL/MED
+        // Pinky row: Z/POINTER   //POINTER
         BASE {
             bindings = <
-&kp ESC           &kp N1        &kp N2        &kp N3        &kp N4        &kp N5      &kp N6       &kp N7        &kp N8         &kp N9          &kp N0          &kp BACKSPACE
-&kp TAB           &kp Q         &kp W         &kp E         &kp R         &kp T       &kp Y        &kp U         &kp I          &kp O           &kp P           &kp BSLH
-&kp CAPSLOCK      &mt LGUI A    &mt LALT S    &mt LCTRL D   &mt LSHFT F   &kp G       &kp H        &mt RSHFT J   &mt RCTRL K    &mt RALT L      &mt RGUI SEMI   &kp SQT
-&kp LEFT_SHIFT    &lt 6 Z       &kp X         &kp C         &kp V         &kp B       &kp N        &kp M         &kp COMMA      &kp DOT         &kp UP_ARROW    &lt 6 FSLH
+&trans            &trans        &trans        &trans        &trans        &trans      &trans       &trans        &trans         &trans          &trans          &trans
+&trans            &kp Q         &kp W         &kp E         &kp R         &kp T       &kp Y        &kp U         &kp I          &kp O           &kp P           &trans
+&trans            &mt LGUI A    &mt LALT S    &mt LCTRL D   &mt LSHFT F   &kp G       &kp H        &mt RSHFT J   &mt RCTRL K    &mt RALT L      &mt RGUI SEMI   &trans
+&trans            &lt 6 Z       &kp X         &kp C         &kp V         &kp B       &kp N        &kp M         &kp COMMA      &kp DOT         &kp UP_ARROW    &lt 6 FSLH
 &kp LEFT_CONTROL  &kp LEFT_WIN  &kp LEFT_ALT  &lt 4 ESC     &lt 1 SPACE   &lt 5 TAB   &lt 3 ENTER  &lt 2 BSPC    &lt 4 DEL      &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
 
-        // ── 1: NAV (placeholder) ─────────────────────────────────────
+        // ── 1: NAV ───────────────────────────────────────────────────
+        // Left home row: Super Alt Ctrl Shift (mods for nav combos)
+        // Right: CapsLock + arrows home row, Ins/Home/PgDn/PgUp/End bottom
+        // Right thumb: Enter + paste/undo
         NAV {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &trans      &trans      &trans      &trans    &trans     &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &trans      &trans      &trans      &trans    &trans     &trans
+&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans  &kp CAPS    &kp LEFT    &kp DOWN    &kp UP    &kp RIGHT  &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &kp INS     &kp HOME    &kp PG_DN   &kp PG_UP &kp END    &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &kp ENTER   &kp K_PASTE &kp K_UNDO  &trans    &trans     &trans
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
 
-        // ── 2: NUM (placeholder) ─────────────────────────────────────
+        // ── 2: NUM ───────────────────────────────────────────────────
+        // Left: numpad layout  [ 7 8 9 ]  /  : 4 5 6 =  /  ` 1 2 3 \
+        // Left thumb: . / 0 / =
+        // Right home row: Shift Ctrl Alt Super (mods)
+        // Right thumb: pink = NUM hold key (trans)
         NUM {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans     &trans  &trans  &trans   &trans     &trans  &trans     &trans     &trans    &trans    &trans
+&trans  &kp LBKT   &kp N7  &kp N8  &kp N9   &kp RBKT   &trans  &trans     &trans     &trans    &trans    &trans
+&trans  &kp SEMI   &kp N4  &kp N5  &kp N6   &kp EQUAL  &trans  &kp RSHFT  &kp RCTRL  &kp RALT  &kp RGUI  &trans
+&trans  &kp GRAVE  &kp N1  &kp N2  &kp N3   &kp BSLH   &trans  &trans     &trans     &trans    &trans    &trans
+&trans  &trans     &trans  &trans  &kp DOT  &kp N0     &trans  &trans     &kp EQUAL  &trans    &trans    &trans
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
 
-        // ── 3: SYM (placeholder) ─────────────────────────────────────
+        // ── 3: SYM ───────────────────────────────────────────────────
+        // Left: shifted symbol layout mirroring NUM
+        // Left thumb: ( / ) / _
+        // Right home row: Shift Ctrl Alt Super (mods)
+        // Right thumb: red = SYM hold key (trans)
         SYM {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans     &trans      &trans       &trans     &trans     &trans  &trans     &trans     &trans    &trans    &trans
+&trans  &kp LBRC   &kp AMPS    &kp STAR     &kp LPAR   &kp RBRC   &trans  &trans     &trans     &trans    &trans    &trans
+&trans  &kp COLON  &kp DOLLAR  &kp PERCENT  &kp CARET  &kp PLUS   &trans  &kp RSHFT  &kp RCTRL  &kp RALT  &kp RGUI  &trans
+&trans  &kp TILDE  &kp EXCL    &kp AT       &kp HASH   &kp PIPE   &trans  &trans     &trans     &trans    &trans    &trans
+&trans  &trans     &trans      &kp LPAR     &kp RPAR   &kp UNDER  &trans  &kp UNDER  &trans     &trans    &trans    &trans
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
 
-        // ── 4: MED (placeholder) ─────────────────────────────────────
+        // ── 4: MED ───────────────────────────────────────────────────
+        // Left: RGB top row, media controls home row
+        // Right: same RGB + media mirrored
+        // Thumbs: purple=MED hold / play / stop
         MED {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans           &trans           &trans           &trans           &trans    &trans           &trans           &trans           &trans           &trans           &trans
+&trans  &rgb_ug RGB_TOG  &rgb_ug RGB_EFF  &rgb_ug RGB_HUI  &rgb_ug RGB_SAI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG  &rgb_ug RGB_EFF  &rgb_ug RGB_HUI  &rgb_ug RGB_SAI  &rgb_ug RGB_BRI  &trans
+&trans  &kp C_PREV       &kp C_VOL_DN     &kp C_VOL_UP     &kp C_NEXT       &trans    &trans           &kp C_PREV       &kp C_VOL_DN     &kp C_VOL_UP     &kp C_NEXT       &trans
+&trans  &bt BT_SEL 0     &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3     &bt BT_CLR  &bt BT_CLR    &bt BT_SEL 0     &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3     &trans
+&trans  &trans           &trans           &trans           &kp C_PP         &kp C_STOP  &kp C_STOP    &kp C_PP         &kp K_MUTE       &trans           &trans           &trans
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
 
-        // ── 5: FUN (placeholder) ─────────────────────────────────────
+        // ── 5: FUN ───────────────────────────────────────────────────
+        // Left home row: Super Alt Ctrl Shift
+        // Right: F-keys  PrintScr/F7/F8/F9/F12 top
+        //                ScrlLk/F4/F5/F6/F11 home
+        //                Pause/F1/F2/F3/F10 bottom
+        // Blue thumb = FUN hold key (trans)
         FUN {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &trans        &trans  &trans  &trans   &trans   &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &kp PSCRN     &kp F7  &kp F8  &kp F9   &kp F12  &trans
+&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans  &kp SLCK      &kp F4  &kp F5  &kp F6   &kp F11  &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &kp PAUSE_BREAK &kp F1 &kp F2  &kp F3   &kp F10  &trans
+&trans  &trans    &trans    &trans     &trans     &trans  &trans        &trans  &trans  &trans   &trans   &trans
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
 
-        // ── 6: POINTER (placeholder) ─────────────────────────────────
+        // ── 6: POINTER ───────────────────────────────────────────────
+        // Left: home row mods + DPI/Sniper (trans until trackball module confirmed)
+        //       bottom: DragScroll / Sniper / EEP_RESET / RESET
+        // Right: same mirrored
+        // Thumbs: MB2 / MB1 / MB3  (both sides)
+        // Green keys = POINTER hold (trans)
         POINTER {
             bindings = <
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans  &trans    &trans    &trans     &trans     &trans       &trans       &trans     &trans     &trans    &trans    &trans
+&trans  &trans    &trans    &trans     &trans     &trans       &trans       &trans     &trans     &trans    &trans    &trans
+&trans  &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &trans       &trans       &kp RSHFT  &kp RCTRL  &kp RALT  &kp RGUI  &trans
+&trans  &trans    &trans    &trans     &trans     &sys_reset   &bootloader  &trans     &trans     &trans    &trans    &trans
+&trans  &trans    &trans    &mkp MB2   &mkp MB1   &mkp MB3     &mkp MB3     &mkp MB1   &mkp MB2   &trans    &trans    &trans
             >;
             sensor-bindings = <&vol_encoder>, <&scroll_encoder>;
         };
